@@ -2,42 +2,50 @@ package step_defs;
 
 import static org.testng.Assert.assertTrue;
 
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import pages.BaseClass;
-import pages.Cart;
+import pages.SignUpLoginPage;
 
 public class Test2 extends BaseClass {
 	
-	Cart shoppingCartPage = new Cart();
-	JavascriptExecutor je = (JavascriptExecutor) driver;
+	SignUpLoginPage loginSignUp = new SignUpLoginPage();
 	
-	@When("^Clicks on Cart without adding any items$")
-	public void clicks_on_Cart_without_adding_any_items() {
+	@When("^Clicks on Login$")
+	public void clicks_on_sign_in() {
 	    
-		wait.until(ExpectedConditions.visibilityOf(shoppingCartPage.cart));
-		shoppingCartPage.cart.click();
+		loginSignUp.signIn.click();
 		
 	}
 
-	@Then("^A message should be displayed saying your cart is empty$")
-	public void a_message_should_be_displayed_saying_your_cart_is_empty() {
+	@Then("^User should see login page and create account button$")
+	public void check_login_and_create_account() {
 	  
-		wait.until(ExpectedConditions.visibilityOf(shoppingCartPage.emptyCartMessage));
-		assertTrue(shoppingCartPage.emptyCartMessage.isDisplayed());
+		wait.until(ExpectedConditions.visibilityOf(loginSignUp.mobilePhone));
+		assertTrue(loginSignUp.mobilePhone.isDisplayed());
+		assertTrue(loginSignUp.createAccount.isDisplayed());
 		
 	}
 	
-	@Then("^Delivery and Payment should not be enabled$")
+	@When("^Clicks on create account$")
+	public void clicks_on_sign_up() {
+	    
+		loginSignUp.signIn.click();
+		wait.until(ExpectedConditions.visibilityOf(loginSignUp.mobilePhone));
+		loginSignUp.createAccount.click();
+		
+	}
+	
+	@Then("^User should be able to see sign up page$")
 	public void check_delivery_and_payment_options() {
 		
-		je.executeScript("arguments[0].scrollIntoView(true)", shoppingCartPage.delivery);
-		wait.until(ExpectedConditions.visibilityOf(shoppingCartPage.delivery));
-		assertTrue(shoppingCartPage.delivery.isEnabled());
-		assertTrue(shoppingCartPage.payment.isEnabled());
+		wait.until(ExpectedConditions.visibilityOf(loginSignUp.mobilePhone));
+		assertTrue(loginSignUp.mobilePhone.isDisplayed());
+		assertTrue(loginSignUp.name.isDisplayed());
+		assertTrue(loginSignUp.email.isDisplayed());
+		assertTrue(loginSignUp.password.isDisplayed());
 		
 	}
 

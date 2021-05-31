@@ -19,7 +19,8 @@ import cucumber.api.testng.TestNGCucumberRunner;
         glue = {"step_defs"},
         plugin = {
         		"com.cucumber.listener.ExtentCucumberFormatter:target/Test_Reports/report.html"
-        })
+        }
+		)
 
 public class TestRunner {
     private TestNGCucumberRunner testNGCucumberRunner;
